@@ -1,2 +1,2 @@
 # jenkins-jobs-builder
-jenkins-jos 
+jenkins-jos  version 2.7
