@@ -1,0 +1,82 @@
+- view-template:
+    name: '{name}_csnt'
+    description: 'test jenkins-job build view and folder and job'
+    view-type: list
+    job-name:
+      - console-frontend
+      - '{name}_backoffice-backend'
+      - '{name}_build'
+
+- project:
+    name: 'TPE'
+    csnt_tw:
+      - tw
+    csnt_ch:
+      - ch
+    csnt_hk:
+      - hk
+    views:
+      - '{name}_csnt'
+    jobs:
+      - '{name}_backoffice-backend'
+      - '{name}_backoffice-backend/{name}_dev_{csnt_tw}'
+      - '{name}_backoffice-backend/{name}_pro_{csnt_ch}'
+      - '{name}_backoffice-backend/{name}_test_{csnt_hk}'
+      - '{name}_build'
+
+- job-template:
+    name: '{name}_backoffice-backend'
+    project-type: folder
+    description: 'Tpe backoffice backend'
+
+- job-template:
+    name: '{name}_backoffice-backend/{name}_dev_{csnt_tw}'
+    description: 'Automatically sub dev 測試'
+    project-type: pipeline
+    triggers:
+        - pollscm:
+            cron: '* * * * *'
+    sandbox: true
+    dsl: |
+        node {{
+           echo 'Hello World sub dev'
+        }}
+
+- job-template:
+    name: '{name}_backoffice-backend/{name}_pro_{csnt_ch}'
+    description: 'Automatically sub pro 測試'
+    project-type: pipeline
+    triggers:
+        - pollscm:
+            cron: '* * * * *'
+    sandbox: true
+    dsl: |
+        node {{
+           echo 'Hello World sub dev'
+        }}
+
+- job-template:
+    name: '{name}_backoffice-backend/{name}_test_{csnt_hk}'
+    description: 'Automatically sub test 測試'
+    project-type: pipeline
+    triggers:
+        - pollscm:
+            cron: '* * * * *'
+    sandbox: true
+    dsl: |
+        node {{
+           echo 'Hello World sub dev'
+        }}
+
+- job-template:
+    name: '{name}_build'
+    description: 'Automatically TPE_build '
+    project-type: pipeline
+    triggers:
+        - pollscm:
+            cron: '* * * * *'
+    sandbox: true
+    dsl: |
+        node {{
+           echo 'Hello World TPE_build'
+        }}
