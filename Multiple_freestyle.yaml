@@ -1,0 +1,18 @@
+- project:
+  name: GitLab
+  jobs:
+    - create-{name}
+    - modify-{name}
+    - success-{name}
+- job-template:
+  name: create-{name}   <- {name} 是project name : create-GitLab
+  description: 'Automatically Jenkins connect Gitlab project create'
+  project-type: freestyle
+- job-template:
+  name: modify-{name}
+  description: 'Automatically Jenkins connect Gitlab project modify'
+  project-type: freestyle
+- job-template:
+  name: success-{name}
+  description: 'Automatically Jenkins connect Gitlab project success'
+  project-type: freestyle
