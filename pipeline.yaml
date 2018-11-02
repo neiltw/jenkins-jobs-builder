@@ -1,0 +1,20 @@
+- project:
+      name: AutoMatically
+      jobs:
+        - jenkins_pipeline_{name}
+
+- job-template:
+    name: jenkins_pipeline_{name}
+    description: 'Automatically 測試專案'
+    project-type: pipeline
+    triggers:
+      - pollscm:
+          cron: '* * * * *'
+    sandbox: true
+    dsl: |
+        node{{
+            stage('build'){{
+                sh '#!/bin/sh \n' +
+                'echo 'Hello frm ${{JENKINS_URL}}'  '
+            }}
+        }}
