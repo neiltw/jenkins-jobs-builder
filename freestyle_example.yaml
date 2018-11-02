@@ -1,0 +1,41 @@
+- project:
+      name: GitLab
+      jobs:
+        - test-{name}
+
+- job-template:
+    name: test-{name}
+    description: 'Automatically Jenkins connect Gitlab project test'
+    project-type: freestyle
+
+    builders:
+      - shell: 'ls -a'
+
+    scm:
+      - git:
+          url: http://192.168.0.180:10080/neil/test_integration.git
+          branches: 
+            - '*/master'
+          credentials-id: "neilgitlab"
+
+    triggers:
+      - gitlab:
+          trigger-push: true
+          trigger-merge-request: true
+          trigger-open-merge-request-push: never 
+          ci-skip: true
+          wip-skip: true
+          set-build-description: true
+          add-note-merge-request: true
+          add-vote-merge-request: true
+          allow-all-branches: true
+          accept-merge-request-on-success: false
+          include-branches:
+            - 'master'
+      - pollscm:
+            cron: "/2 * * * *"
+
+    publishers:
+      - gitlab-notifier:
+          name: jenkins-auto
+          mark-unstable-as-success: true
